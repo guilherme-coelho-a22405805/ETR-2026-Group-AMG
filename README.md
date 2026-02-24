@@ -1,15 +1,13 @@
-# ETR-2026-Group-AMG
-Requirements Engineering &amp; Testing — Labs 2026
+# ETR 2026 - Grupo - AMG
 
-- Miguel Lopes
+## Elementos do Grupo
+* **Afonso Rodrigues** 
+* **Guilherme Coelho** 
+* **Miguel Lopes** 
 
-- Afonso Rodrigues
+## Stack Técnica
+* **Track:** -> PyTest ou JUnit
+* **Projeto:** -> Opção A: AMS Baseline 
 
-- Guilherme Coelho
-
-#### Programa de testes escolhido
-Pytest ou  JUnit - escolher...
-
-#### Projeto
-- AMS
-
+## Como executar os testes
+(Placeholder para o Lab 2)

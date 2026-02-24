@@ -1,0 +1,1 @@
+## Termos essenciais para o projeto
