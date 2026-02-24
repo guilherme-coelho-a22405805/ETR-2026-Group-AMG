@@ -15,3 +15,7 @@ Output to capture (Scribe)
     the Client’s answers (or assumptions if unknown)
 
     3 “open questions” to clarify later
+
+
+#### Role Play Notes do Scribe 
+... 
