@@ -4,70 +4,76 @@
 
 | ID | Epic | Requirement | Priority | Variant Impact |
 |:--- |:--- |:--- |:--- |:--- |
-| **REQ-001** | EPIC-1 | O sistema deve gerar a próxima pergunta (NBQ) para reduzir a incerteza do intake. | H | No |
-| **REQ-002** | EPIC-2 | O motor deve calcular o Continuity Score (0-100) com base nos dados de infraestrutura. | H | No |
-| **REQ-003** | EPIC-2 | **[Variante]** O sistema deve fornecer os "Top 5 drivers" que justificam cada score gerado. | H | **Yes** |
-| **REQ-004** | EPIC-3 | O motor deve estimar o esforço de equipa em bandas P10, P50 e P90. | H | No |
-| **REQ-005** | EPIC-2 | O sistema deve calcular o risco de mudanças (Change Risk) com base no histórico. | M | No |
-| **REQ-006** | EPIC-4 | O motor deve validar a "frescura" (freshness) dos links de evidência fornecidos. | M | No |
-| **REQ-007** | EPIC-2 | **[Variante]** O sistema deve expor um endpoint para explicar a metodologia de cálculo. | L | **Yes** |
+| **REQ-001** | EPIC-1 | **NBQ Service**: Retornar a próxima pergunta mais informativa baseada no perfil e respostas atuais. | H | No |
+| **REQ-002** | EPIC-2 | **Continuity Score**: Calcular a prontidão operacional (0-100) com breakdown de fatores. | H | No |
+| **REQ-003** | EPIC-2 | **Change Risk**: Avaliar o risco de mudanças planeadas com drivers e guardrails. | H | No |
+| **REQ-004** | EPIC-3 | **Sizing Estimate**: Estimar esforço em bandas P10/P50/P90 com pressupostos de impacto. | H | No |
+| **REQ-005** | EPIC-2 | **90-day Recommendations**: Gerar ações prioritárias com prefill hints para o Grupo 2. | M | No |
+| **REQ-006** | EPIC-2 | **Explain Endpoint**: [Variante] Fornecer explicações humanas para scores, ordenadas por contribuição. | H | **Yes** |
+| **REQ-007** | EPIC-4 | **Policy Versioning**: Versionar políticas e garantir que cada resposta inclui a `policyVersion`. | H | **Yes** |
+| **REQ-008** | EPIC-4 | **Feature Catalog**: Publicar o catálogo de features com mapeamento para o Grupo 1. | M | No |
+| **REQ-009** | EPIC-1 | **Input Validation**: Validar e normalizar tipos, enums e datas em formato UTC. | H | No |
+| **REQ-010** | EPIC-4 | **Determinism & Replay**: [Variante] Persistir `inputsHash` para garantir reprodutibilidade total. | H | **Yes** |
 
 ## Detailed Requirements (Top 6)
 
-### REQ-001: Geração de Next-Best-Question (NBQ)
-* **Description:** O motor deve analisar o estado atual das respostas e selecionar a pergunta que, estatisticamente, mais contribui para fechar o gap de incerteza do score final.
-* **Objective:** Minimizar o tempo do utilizador no processo de intake.
-* **Acceptance Criteria:**
-    * O endpoint `/nbq/next` deve retornar apenas uma pergunta por pedido.
-    * A pergunta retornada deve incluir o peso (weight) e a justificação (why).
-* **Variant Impact:** No
+### REQ-001: NBQ Service (Next-Best-Question)
+* **Description**: Retornar a próxima pergunta condicionada ao setor, solução e respostas atuais.
+* **Objective**: Maximizar o ganho de informação por interação.
+* **Acceptance Criteria**:
+    * Retornar `200 OK` com `{ id, text, fields[], weight, why }`.
+    * Retornar `{ done: true }` quando não houver mais perguntas aplicáveis.
+* **Variant Impact**: No
 
-### REQ-002: Cálculo de Continuity Score
-* **Description:** Processar as respostas normalizadas para gerar um índice de prontidão operacional (0 a 100).
-* **Objective:** Fornecer uma métrica clara sobre o risco de assumir o suporte de uma aplicação.
-* **Acceptance Criteria:**
-    * O cálculo deve considerar as áreas de Observabilidade, DR/BCP, Acessos e Runbooks.
-    * O score deve ser atualizado instantaneamente após a submissão de novos dados.
-* **Variant Impact:** No
+### REQ-003: Change Risk Assessment
+* **Description**: Avaliar o risco de uma mudança usando o payload da mudança e histórico de KPIs.
+* **Objective**: Prevenir falhas em produção através de mitigação antecipada.
+* **Acceptance Criteria**:
+    * Se o risco exceder o threshold, incluir guardrails (ex: `ADD_CANARY`).
+    * O resultado deve ser determinístico por versão de política.
+* **Variant Impact**: No
 
-### REQ-003: Explicabilidade via "Top 5 Drivers"
-* **Description:** Para cada cálculo de score, o motor deve identificar e listar os 5 fatores (respostas ou falta delas) que mais impactaram o resultado final.
-* **Objective:** Garantir que o Transition Manager compreende e pode remediar os pontos fracos detetados.
-* **Acceptance Criteria:**
-    * Devem ser listados 5 itens (ou todos, se o total de inputs for inferior a 5).
-    * Cada driver deve incluir o nome da feature e a sua contribuição percentual.
-* **Variant Impact:** **Yes**
+### REQ-006: Explain Endpoint (Variante 3)
+* **Description**: Fornecer explicações legíveis para qualquer score gerado.
+* **Objective**: Garantir a transparência (explicabilidade) exigida pela Variante 3.
+* **Acceptance Criteria**:
+    * Listar drivers ordenados por contribuição absoluta.
+    * Mapear drivers diretamente para as features ou perguntas de origem.
+* **Variant Impact**: **Yes**
 
-### REQ-004: Estimativa de Sizing (P10/P50/P90)
-* **Description:** Calcular a necessidade de equipa (FTEs) com base em volumetria de tickets e SLAs de suporte.
-* **Objective:** Evitar o sub-dimensionamento ou sobre-dimensionamento da equipa na fase comercial.
-* **Acceptance Criteria:**
-    * O output deve apresentar três bandas: Otimista (P10), Provável (P50) e Conservadora (P90).
-    * O cálculo deve incluir pressupostos sobre automação esperada.
-* **Variant Impact:** No
+### REQ-007: Policy Versioning & Registry (Variante 3)
+* **Description**: Gerir versões imutáveis de políticas de scoring e NBQ.
+* **Objective**: Permitir auditoria e garantir que o comportamento do motor é previsível.
+* **Acceptance Criteria**:
+    * Toda a resposta da API deve incluir o campo `policyVersion`.
+    * `GET /policy/version` deve listar o histórico completo com checksums.
+* **Variant Impact**: **Yes**
 
-### REQ-006: Validação de Evidência (Freshness)
-* **Description:** Verificar se as evidências fornecidas (ex: links para testes de DR) foram atualizadas nos últimos 12 meses.
-* **Objective:** Garantir que o score reflete o estado atual e não dados obsoletos.
-* **Acceptance Criteria:**
-    * O sistema deve sinalizar evidências com mais de 365 dias como "stale".
-    * Evidências obsoletas devem ter um peso negativo no Continuity Score.
-* **Variant Impact:** No
+### REQ-009: Input Validation & Normalization
+* **Description**: Validar esquemas e normalizar dados recebidos dos Grupos 1 e 2.
+* **Objective**: Garantir a integridade dos dados antes do processamento analítico.
+* **Acceptance Criteria**:
+    * Rejeitar pedidos com campos obrigatórios em falta com erro `MISSING_FIELDS`.
+    * Normalizar datas para UTC e canonicalizar booleanos e enums.
+* **Variant Impact**: No
 
-### REQ-010: Execução Determinística da Política
-* **Description:** Garantir que, para a mesma versão de política e os mesmos inputs, o motor gera sempre o mesmo output.
-* **Objective:** Permitir a auditabilidade e reprodutibilidade dos resultados para compliance.
-* **Acceptance Criteria:**
-    * O sistema deve realizar um "hash check" entre execuções com o mesmo payload.
-* **Variant Impact:** **Yes**
+### REQ-010: Determinism & Replay (Variante 3)
+* **Description**: Garantir que o motor produz resultados idênticos para os mesmos inputs e política.
+* **Objective**: Cumprir o requisito de reprodutibilidade da Variante 3.
+* **Acceptance Criteria**:
+    * Persistir um `ScoringRun` com o `inputsHash` de cada pedido.
+    * Em caso de replay com o mesmo hash e versão, o output deve ser validado por comparação de hash.
+* **Variant Impact**: **Yes**
 
 ## Non-Functional Requirements (NFR)
 
 | ID | Type | Requirement | Measurable Metric | Variant? |
 |:--- |:--- |:--- |:--- |:--- |
-| **NFR-001** | Performance | Latência reduzida para scoring. | $\le$ 500ms para 95% dos pedidos sob carga normal. | No |
-| **NFR-002** | Availability | Disponibilidade do serviço. | 99.9% de uptime mensal. | No |
-| **NFR-003** | **[Variante]** | Reprodutibilidade. | 100% de coincidência de hash para inputs idênticos na mesma versão. | **Yes** |
-| **NFR-004** | Architecture | Statelessness. | 0 persistência de dados de sessão em base de dados local. | No |
-| **NFR-005** | Observability | Rastreabilidade de erros. | Todos os logs devem incluir um `requestId` único. | No |
-| **NFR-006** | **[Variante]** | Transparência. | Cada driver retornado deve ter um label legível (human-readable). | **Yes** |
+| **NFR-001** | Performance | Latência para Scoring/NBQ. | p95 $\le$ 500ms para `/nbq/next` e `/continuity-score`. | No |
+| **NFR-002** | Performance | Latência para Sizing. | p95 $\le$ 800ms para `/sizing/estimate`. | No |
+| **NFR-003** | Availability | Disponibilidade. | 99.9% de uptime mensal com endpoints de `/health` e `/ready`. | No |
+| **NFR-004** | Security | Rate Limiting. | 5 RPS por utilizador com burst de 10 pedidos. | No |
+| **NFR-005** | Observability | Logs Estruturados. | Logs em formato JSON incluindo `requestId`, `latencyMs` e `status`. | No |
+| **NFR-006** | **[Variante]** | Determinismo. | 100% de coincidência de outputs para inputs idênticos e mesma versão. | **Yes** |
+| **NFR-007** | Quality | Cobertura de Testes. | Mínimo de 70% de cobertura em módulos core de lógica. | No |
+| **NFR-008** | **[Variante]** | Explicabilidade. | Cada score deve devolver obrigatoriamente os top 5 drivers com labels legíveis. | **Yes** |
