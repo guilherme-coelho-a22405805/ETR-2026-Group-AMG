@@ -1,9 +1,10 @@
 # ETR 2026 - Grupo - AMG
+**G3 - AI Engine**
 
 ## Elementos do Grupo
 * **Afonso Rodrigues** 
 * **Guilherme Coelho** 
-* **Miguel Lopes** 
+* **Miguel Lopes**
 
 ## Stack Técnica
 * **Track:** -> PyTest ou JUnit
