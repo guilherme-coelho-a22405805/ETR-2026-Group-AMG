@@ -1,0 +1,92 @@
+@startuml
+header Grupo G3 - AI Engine
+title Use Case Diagram - AI Engine Intake Platform
+
+left to right direction
+
+' --- Definição dos Atores ---
+actor "AI Researcher" as AR
+actor "AIOps Lead" as AL
+actor "Governance Auditor" as GA
+actor "Model Registry" as MR << System >>
+
+' --- Fronteira do Sistema ---
+rectangle "AI Engine Intake Platform" {
+  usecase "Registar Novo Modelo" as UC1
+  usecase "Upload de Dataset de Teste" as UC2
+  usecase "Executar Teste de Bias" as UC3
+  usecase "Rever Métricas de Performance" as UC4
+  usecase "Aprovar Deploy para Produção" as UC5
+  usecase "Gerar Model Card (Relatório)" as UC6
+  usecase "Validar Campos Obrigatórios" as UC7
+}
+
+' --- Relacionamentos (Associações) ---
+
+' O Researcher inicia o processo
+AR --> UC1
+AR --> UC2
+
+' O AIOps Lead foca-se na performance e aprovação
+AL --> UC4
+AL --> UC5
+
+' O Auditor verifica a ética e conformidade
+GA --> UC3
+GA --> UC6
+
+' O Sistema externo recebe os dados do registo
+UC1 -- MR
+
+' --- Inclusões (Regras de Negócio) ---
+' Sempre que se regista um modelo, os campos são validados
+UC1 ..> UC7 : <<include>>
+' O deploy requer a revisão de métricas prévia
+UC5 ..> UC4 : <<include>>
+
+
+header Grupo G3 - AI Engine
+title Use Case Diagram - AI Engine Intake Platform
+
+left to right direction
+
+' --- Definição dos Atores ---
+actor "AI Researcher" as AR
+actor "AIOps Lead" as AL
+actor "Governance Auditor" as GA
+actor "Model Registry" as MR << System >>
+
+' --- Fronteira do Sistema ---
+rectangle "AI Engine Intake Platform" {
+  usecase "Registar Novo Modelo" as UC1
+  usecase "Upload de Dataset de Teste" as UC2
+  usecase "Executar Teste de Bias" as UC3
+  usecase "Rever Métricas de Performance" as UC4
+  usecase "Aprovar Deploy para Produção" as UC5
+  usecase "Gerar Model Card (Relatório)" as UC6
+  usecase "Validar Campos Obrigatórios" as UC7
+}
+
+' --- Relacionamentos (Associações) ---
+
+' O Researcher inicia o processo
+AR --> UC1
+AR --> UC2
+
+' O AIOps Lead foca-se na performance e aprovação
+AL --> UC4
+AL --> UC5
+
+' O Auditor verifica a ética e conformidade
+GA --> UC3
+GA --> UC6
+
+' O Sistema externo recebe os dados do registo
+UC1 -- MR
+
+' --- Inclusões (Regras de Negócio) ---
+' Sempre que se regista um modelo, os campos são validados
+UC1 ..> UC7 : <<include>>
+' O deploy requer a revisão de métricas prévia
+UC5 ..> UC4 : <<include>>
+@enduml
