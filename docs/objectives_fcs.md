@@ -1,9 +1,9 @@
 # Objectives & Critical Success Factors (CSFs) — Lab 4
 
 ## Variant
-- **Variant number:** Group 3
-- **Persona:** Transition Manager (Responsável técnico pela validação de serviços)
-- **Key constraint focus:** Determinismo algorítmico e explicabilidade (Top 5 drivers)
+- **Variant number:** Group 
+- **Persona:** Transition Manager 
+- **Key constraint focus:** Determinismo algorítmico e explicabilidade
 
 ---
 

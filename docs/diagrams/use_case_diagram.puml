@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+
+actor "G2 Interface" as G2 <<System>>
+actor "Transition Manager" as TM <<Persona>>
+actor "G1 Core" as G1 <<System>>
+
+rectangle "AI Engine (G3) - Intake & Scoring" {
+  usecase "UC-01: Sugerir próxima pergunta (NBQ)" as UC1
+  usecase "UC-02: Calcular Continuity Score" as UC2
+  usecase "UC-03: Avaliar risco de mudança" as UC3
+  usecase "UC-04: Gerar Sizing (FTE)" as UC4
+  usecase "UC-05: Consultar explicação de score" as UC5
+  usecase "UC-06: Validar Replay (Determinismo)" as UC6
+}
+
+G2 --> UC1
+G2 --> UC2
+G2 --> UC3
+G2 --> UC4
+
+TM --> UC5
+TM --> UC6
+
+UC2 -- G1 : <<consumes>>
+UC3 -- G1 : <<consumes>>
+@enduml
