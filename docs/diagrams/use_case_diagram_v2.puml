@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+
+actor "Transition Lead" as TL
+actor "G2 Assistant" as G2 <<System>>
+actor "Core System (G1)" as G1 <<System>>
+
+rectangle "AI Engine (G3)" {
+  usecase "UC-01 Sugerir próxima pergunta (NBQ)" as UC1
+  usecase "UC-02 Calcular Continuity Score" as UC2
+  usecase "UC-03 Avaliar risco de mudança" as UC3
+  usecase "UC-04 Gerar Sizing (FTE)" as UC4
+  usecase "UC-05 Consultar explicação de score" as UC5
+  usecase "UC-06 Validar Replay de execução" as UC6
+  
+  usecase "Validar Esquema de Input" as UC_VAL
+  usecase "Gerar Recomendações 90-dias" as UC_REC
+}
+
+G2 --> UC1
+G2 --> UC2
+G2 --> UC3
+G2 --> UC4
+
+TL --> UC5
+TL --> UC6
+
+' Relações refinadas
+UC1 ..> UC_VAL : <<include>>
+UC2 ..> UC_VAL : <<include>>
+UC2 <.. UC_REC : <<extend>> (se score < 100)
+
+UC2 -- G1 : <<consumes data>>
+@enduml
