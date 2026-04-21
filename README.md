@@ -4,7 +4,8 @@
 ## Elementos do Grupo e Funções (Lab 1)
 * **Afonso Rodrigues** 
 * **Guilherme Coelho** 
-* **Miguel Lopes** 
+* **Miguel Lopes**
+* **Diogo Faísca** 
 
 ## Stack Técnica
 * **Track:** PyTest ou JUnit
