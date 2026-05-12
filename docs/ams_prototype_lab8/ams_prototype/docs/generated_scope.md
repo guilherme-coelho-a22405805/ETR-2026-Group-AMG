@@ -16,7 +16,7 @@
 ## Actors / roles
 
 - **Primary actor:** Transition Manager (persona da Variante 3)
-- **Secondary actor:** G2 Assistant (representado pela própria UI web neste protótipo)
+- **Secondary actor:** G2 Assistant (representado pela própria UI desktop neste protótipo)
 
 ## Use Cases implemented
 
@@ -66,27 +66,14 @@ Total: **7 requisitos** (dentro do limite de 10).
    políticas não permite delete (apenas marcar `inactive`/`deprecated`), e cada
    versão tem checksum SHA-256 único e estável.
 
-## UI / Execution environment
-
-O protótipo tem **duas camadas de UI** sobre o mesmo motor:
-
-- **`ui/app_web.py`** — Streamlit, usada em **GitHub Codespaces** (sem display
-  gráfico). Acessível via port forwarding (porta 8501). É a UI primária
-  para esta entrega do Lab 8.
-- **`ui/app.py`** — Tkinter, desktop, usada em PC local com display X11/Aqua/Windows.
-
-Ambas consomem **exatamente o mesmo motor** (`ai_engine/` + `storage/`), o que
-prova que a arquitetura está corretamente desacoplada — a UI pode trocar sem
-impactar requisitos, validação ou variant constraints.
-
 ## Out of scope (explicit)
 
 - **NBQ Service (REQ-001), Change Risk (REQ-003), Sizing (REQ-004), 90-day
   Recommendations (REQ-005), Feature Catalog (REQ-008):** fora do slice escolhido.
 - **Testes automatizados (PyTest):** serão criados no Lab 11 (test-first).
-- **Endpoints REST reais:** este protótipo é uma app web local. As assinaturas
-  dos métodos espelham os endpoints (`/continuity-score`, `/explain`) para
-  permitir migração futura sem reescrever o motor.
+- **Endpoints REST reais:** este protótipo é desktop. As assinaturas dos métodos
+  espelham os endpoints (`/continuity-score`, `/explain`) para permitir migração
+  futura sem reescrever o motor.
 - **Rate limiting (NFR-004) e logs estruturados (NFR-005):** fora do scope mínimo
   do Lab 8.
 - **Autenticação / RBAC:** o protótipo assume um único utilizador local.

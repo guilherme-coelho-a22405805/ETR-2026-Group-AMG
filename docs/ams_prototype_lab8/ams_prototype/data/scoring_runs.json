@@ -1,0 +1,73 @@
+[
+  {
+    "normalizedPayload": {
+      "application_id": "APP-TEST-001",
+      "sector": "retail",
+      "responses": {
+        "documentation_completeness": 0.45,
+        "monitoring_coverage": 0.7,
+        "dr_bcp_readiness": 0.7,
+        "access_management": 0.7,
+        "integrations_mapped": 0.7,
+        "support_model_defined": 0.7
+      },
+      "timestamp": "2026-05-12T07:54:52.696736+00:00",
+      "missing_optional_fields": []
+    },
+    "result": {
+      "runId": "c3d0fd59-3a21-4504-9d77-24684f0f0a2d",
+      "applicationId": "APP-TEST-001",
+      "score": 64,
+      "policyVersion": "v1.0.0",
+      "policyChecksum": "0a401be5618595f90f120bf366e3c4adef60e28f8f4d69b7369c590482fefdab",
+      "inputsHash": "04ed647a3a6a1c35003e29eb1d25c4a7ea92e92a19fcbf8b5c30034dc403b4eb",
+      "breakdown": [
+        {
+          "factor": "documentation_completeness",
+          "label": "Cobertura da documentação",
+          "value": 0.45,
+          "weight": 0.25,
+          "contribution": 11.25
+        },
+        {
+          "factor": "monitoring_coverage",
+          "label": "Cobertura de observabilidade",
+          "value": 0.7,
+          "weight": 0.2,
+          "contribution": 14.0
+        },
+        {
+          "factor": "dr_bcp_readiness",
+          "label": "Prontidão DR/BCP",
+          "value": 0.7,
+          "weight": 0.2,
+          "contribution": 14.0
+        },
+        {
+          "factor": "access_management",
+          "label": "Gestão de acessos (RBAC)",
+          "value": 0.7,
+          "weight": 0.15,
+          "contribution": 10.5
+        },
+        {
+          "factor": "integrations_mapped",
+          "label": "Integrações mapeadas",
+          "value": 0.7,
+          "weight": 0.1,
+          "contribution": 7.0
+        },
+        {
+          "factor": "support_model_defined",
+          "label": "Modelo de suporte definido",
+          "value": 0.7,
+          "weight": 0.1,
+          "contribution": 7.0
+        }
+      ],
+      "uncertainty_applied": false,
+      "missingOptionalFields": [],
+      "computedAt": "2026-05-12T07:54:52.696863+00:00"
+    }
+  }
+]
