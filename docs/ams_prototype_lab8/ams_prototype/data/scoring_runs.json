@@ -69,5 +69,218 @@
       "missingOptionalFields": [],
       "computedAt": "2026-05-12T07:54:52.696863+00:00"
     }
+  },
+  {
+    "normalizedPayload": {
+      "application_id": "APP-TEST-001",
+      "sector": "bfsi",
+      "responses": {
+        "documentation_completeness": 0.7,
+        "monitoring_coverage": 0.7,
+        "dr_bcp_readiness": 0.7,
+        "access_management": 0.7,
+        "integrations_mapped": 0.7,
+        "support_model_defined": 0.7
+      },
+      "timestamp": "2026-05-19T07:04:58.502021+00:00",
+      "missing_optional_fields": []
+    },
+    "result": {
+      "runId": "c2bdcd61-a832-49ab-993e-8afc6b961f83",
+      "applicationId": "APP-TEST-001",
+      "score": 70,
+      "policyVersion": "v1.0.0",
+      "policyChecksum": "0a401be5618595f90f120bf366e3c4adef60e28f8f4d69b7369c590482fefdab",
+      "inputsHash": "68d36db543da4aa7ac96b5a25dc1c499ce10881f70cbd5e1c380974b1a4029fc",
+      "breakdown": [
+        {
+          "factor": "documentation_completeness",
+          "label": "Cobertura da documentação",
+          "value": 0.7,
+          "weight": 0.25,
+          "contribution": 17.5
+        },
+        {
+          "factor": "monitoring_coverage",
+          "label": "Cobertura de observabilidade",
+          "value": 0.7,
+          "weight": 0.2,
+          "contribution": 14.0
+        },
+        {
+          "factor": "dr_bcp_readiness",
+          "label": "Prontidão DR/BCP",
+          "value": 0.7,
+          "weight": 0.2,
+          "contribution": 14.0
+        },
+        {
+          "factor": "access_management",
+          "label": "Gestão de acessos (RBAC)",
+          "value": 0.7,
+          "weight": 0.15,
+          "contribution": 10.5
+        },
+        {
+          "factor": "integrations_mapped",
+          "label": "Integrações mapeadas",
+          "value": 0.7,
+          "weight": 0.1,
+          "contribution": 7.0
+        },
+        {
+          "factor": "support_model_defined",
+          "label": "Modelo de suporte definido",
+          "value": 0.7,
+          "weight": 0.1,
+          "contribution": 7.0
+        }
+      ],
+      "uncertainty_applied": false,
+      "missingOptionalFields": [],
+      "computedAt": "2026-05-19T07:04:58.502442+00:00"
+    }
+  },
+  {
+    "normalizedPayload": {
+      "application_id": "APP-TEST-001",
+      "sector": "bfsi",
+      "responses": {
+        "documentation_completeness": 0.3118279569892473,
+        "monitoring_coverage": 0.0,
+        "dr_bcp_readiness": 0.7,
+        "access_management": 0.7,
+        "integrations_mapped": 0.7,
+        "support_model_defined": 0.7
+      },
+      "timestamp": "2026-05-19T07:33:18.471262+00:00",
+      "missing_optional_fields": []
+    },
+    "result": {
+      "runId": "395a7de3-abdf-43dc-834b-0422ca9b8f82",
+      "applicationId": "APP-TEST-001",
+      "score": 46,
+      "policyVersion": "v1.0.0",
+      "policyChecksum": "0a401be5618595f90f120bf366e3c4adef60e28f8f4d69b7369c590482fefdab",
+      "inputsHash": "b7303bbed16deacd79514e550fa43cc3f237f56b795e8254dd99a4e24569b755",
+      "breakdown": [
+        {
+          "factor": "documentation_completeness",
+          "label": "Cobertura da documentação",
+          "value": 0.3118,
+          "weight": 0.25,
+          "contribution": 7.7957
+        },
+        {
+          "factor": "monitoring_coverage",
+          "label": "Cobertura de observabilidade",
+          "value": 0.0,
+          "weight": 0.2,
+          "contribution": 0.0
+        },
+        {
+          "factor": "dr_bcp_readiness",
+          "label": "Prontidão DR/BCP",
+          "value": 0.7,
+          "weight": 0.2,
+          "contribution": 14.0
+        },
+        {
+          "factor": "access_management",
+          "label": "Gestão de acessos (RBAC)",
+          "value": 0.7,
+          "weight": 0.15,
+          "contribution": 10.5
+        },
+        {
+          "factor": "integrations_mapped",
+          "label": "Integrações mapeadas",
+          "value": 0.7,
+          "weight": 0.1,
+          "contribution": 7.0
+        },
+        {
+          "factor": "support_model_defined",
+          "label": "Modelo de suporte definido",
+          "value": 0.7,
+          "weight": 0.1,
+          "contribution": 7.0
+        }
+      ],
+      "uncertainty_applied": false,
+      "missingOptionalFields": [],
+      "computedAt": "2026-05-19T07:33:18.471588+00:00"
+    }
+  },
+  {
+    "normalizedPayload": {
+      "application_id": "APP-TEST-001",
+      "sector": "healthcare",
+      "responses": {
+        "documentation_completeness": 0.5698924731182796,
+        "monitoring_coverage": 0.0,
+        "dr_bcp_readiness": 0.3064516129032258,
+        "access_management": 0.9354838709677419,
+        "integrations_mapped": 0.27419354838709675,
+        "support_model_defined": 0.6666666666666666
+      },
+      "timestamp": "2026-05-19T07:33:32.949382+00:00",
+      "missing_optional_fields": []
+    },
+    "result": {
+      "runId": "8532d129-85a6-45ba-941f-3039beed592c",
+      "applicationId": "APP-TEST-001",
+      "score": 44,
+      "policyVersion": "v1.0.0",
+      "policyChecksum": "0a401be5618595f90f120bf366e3c4adef60e28f8f4d69b7369c590482fefdab",
+      "inputsHash": "93d3098189e9620b0bbda9b601ab475b79fdef1df5dac6c503e774dc15d1fb76",
+      "breakdown": [
+        {
+          "factor": "documentation_completeness",
+          "label": "Cobertura da documentação",
+          "value": 0.5699,
+          "weight": 0.25,
+          "contribution": 14.2473
+        },
+        {
+          "factor": "monitoring_coverage",
+          "label": "Cobertura de observabilidade",
+          "value": 0.0,
+          "weight": 0.2,
+          "contribution": 0.0
+        },
+        {
+          "factor": "dr_bcp_readiness",
+          "label": "Prontidão DR/BCP",
+          "value": 0.3065,
+          "weight": 0.2,
+          "contribution": 6.129
+        },
+        {
+          "factor": "access_management",
+          "label": "Gestão de acessos (RBAC)",
+          "value": 0.9355,
+          "weight": 0.15,
+          "contribution": 14.0323
+        },
+        {
+          "factor": "integrations_mapped",
+          "label": "Integrações mapeadas",
+          "value": 0.2742,
+          "weight": 0.1,
+          "contribution": 2.7419
+        },
+        {
+          "factor": "support_model_defined",
+          "label": "Modelo de suporte definido",
+          "value": 0.6667,
+          "weight": 0.1,
+          "contribution": 6.6667
+        }
+      ],
+      "uncertainty_applied": false,
+      "missingOptionalFields": [],
+      "computedAt": "2026-05-19T07:33:32.949706+00:00"
+    }
   }
 ]

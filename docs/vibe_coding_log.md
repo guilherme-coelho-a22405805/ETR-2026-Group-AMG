@@ -3,8 +3,20 @@
 ## Tool used
 
 - **Tool:** Claude (assistente AI conversacional, modo "vibe coding")
-- **Environment / stack:** Python 3.9+ no GitHub Codespaces; Streamlit para UI web; JSON local para storage
-- **Sem dependências pesadas:** apenas `streamlit` é necessário via `pip install -r requirements.txt`
+- **Environment / stack:** Python 3.9+, Tkinter (UI), JSON local (storage)
+- **Sem dependências externas:** o protótipo corre com a biblioteca standard
+  do Python — sem `pip install` necessário.
+
+## Approach summary
+
+Em vez de delegar ao tool a decisão de scope, alimentámo-lo com:
+
+- o nosso **Variant Assignment** (Grupo 3 — Determinism + Explainability),
+- a `Requirements v1` com os REQs marcados como variant-driven,
+- os Use Cases v2 (UC-02 e UC-05) com main + alt + exception flows,
+- os Acceptance Criteria (incluindo os Given/When/Then do REQ-006 e REQ-010).
+
+A partir daí seguimos **2 ciclos** de prompt → generate → run → fix, descritos abaixo.
 
 ---
 
@@ -45,7 +57,7 @@
 - Sugestão de adicionar logs estruturados JSON (NFR-005)
   → **rejeitado:** NFR-005 não está nos 7 REQs deste lab; deixámos para Lab 11.
 - Sugestão de criar um endpoint Flask
-  → **rejeitado:** o utilizador pediu uma aplicação Python, não REST.
+  → **rejeitado:** o utilizador pediu **desktop**, não REST.
 
 **Manual verification (smoke_test.py):**
 
@@ -64,7 +76,7 @@
 
 ---
 
-## Iteration 2 — Primeira UI (Tkinter) + storage + exception flow do UC-05
+## Iteration 2 — UI desktop + storage + exception flow do UC-05
 
 **Prompt (resumo):**
 
@@ -101,7 +113,7 @@
   → **rejeitado:** o validador do `ai_engine` é a única fonte de verdade
   (single source of truth). Duplicar validação criaria divergência.
 
-**Manual verification:**
+**Manual verification (via UI + smoke_test.py):**
 
 - ✅ Happy path: preencher form e calcular score → resultado com runId persistido
 - ✅ Alternative flow A1: desmarcar 3-4 checkboxes → resultado mostra
@@ -120,76 +132,27 @@
 
 ---
 
-## Iteration 3 — Migração para Streamlit (Codespace compatibility)
+## Notes (lessons learned)
 
-**Contexto:** Ao tentar correr o protótipo num GitHub Codespace, o Tkinter
-falhou com `_tkinter.TclError: no display name and no $DISPLAY environment
-variable`. Embora a aplicação Tkinter esteja correta, o ambiente cloud
-não tem servidor X11 disponível.
-
-**Prompt (resumo):**
-
-> "Mantém toda a lógica do `ai_engine/` e `storage/` intocada e cria uma
-> camada UI alternativa em Streamlit (`ui/app_web.py`) com as mesmas 3 abas:
-> Calcular Score, Explicar Score, Registo de Políticas. Tem de funcionar
-> em Codespace via port forwarding. Inclui também o botão 'Simular adulteração'
-> para demonstrar a exceção E1 da Variante 3."
-
-**Generated output:**
-
-- `ui/app_web.py` (Streamlit, 3 abas via `st.tabs`)
-- `requirements.txt` com `streamlit>=1.30.0`
-- README atualizado com instruções para os dois modos (web + desktop)
-
-**Kept:**
-
-- Os mesmos componentes lógicos (sliders, checkboxes "incluir", combobox de runIds)
-  agora como widgets Streamlit nativos.
-- `st.metric` para mostrar score / policy / uncertainty — mais legível que texto
-  bruto.
-- `st.dataframe` para o breakdown — substitui a impressão JSON do Tkinter.
-- O botão "Simular adulteração" mantém o mesmo comportamento (clona o stored run,
-  altera uma feature, chama `explain_score` para forçar `DeterminismError`).
-
-**Rejected:**
-
-- Sugestão do tool de eliminar o `ui/app.py` (Tkinter) e ficar só com web.
-  → **Rejeitado:** mantemos as duas UIs porque a Iteration 2 já tinha sido
-  validada. O `app_web.py` é uma alternativa para Codespaces, não substituição.
-  Esta decisão também documenta a flexibilidade da arquitetura.
-- Sugestão de adicionar autenticação via `streamlit-authenticator`.
-  → **Rejeitado:** fora do scope, autenticação está em out-of-scope no
-  `generated_scope.md`.
-
-**Manual verification:**
-
-- ✅ `streamlit run ui/app_web.py` arranca sem erro no Codespace
-- ✅ Codespace abre port 8501 e a UI renderiza no browser
-- ✅ Happy path: form preenchido → score calculado e métricas visíveis
-- ✅ Alternative flow A1: desmarcar checkboxes → warning de "campos opcionais
-  em falta" + flag `Uncertainty: Sim`
-- ✅ Exception E1: Application ID vazio → erro vermelho `MISSING_FIELDS`
-- ✅ UC-05 happy path: dropdown seleciona run → Top 5 drivers em cards
-- ✅ UC-05 E1 (Variant): botão "Simular adulteração" → bloqueio com hashes
-  side-by-side visíveis na UI
-
-**Changes made after generation:**
-
-- Pequeno ajuste: nas primeiras versões da UI Streamlit, o seletor de runs
-  mostrava IDs pela ordem de inserção. Mudei para `index=len(ids)-1` para
-  selecionar o **mais recente por defeito** — comportamento mais intuitivo
-  quando se acaba de calcular um score na aba 1.
-- O `st.set_page_config` foi colocado mesmo no topo do ficheiro (Streamlit
-  exige que seja a primeira chamada).
-
-**Lição importante (cross-environment):**
-
-Vibe coding inicial assumiu "Python desktop" sem ressalvas; o tool escolheu
-Tkinter por ser standard library. Quando o ambiente real (Codespace) não suportou,
-a separação clara entre **motor (`ai_engine/`)** e **UI (`ui/`)** salvou-nos:
-**zero alterações** ao motor, smoke_test e storage foram necessárias. Toda a
-adaptação ficou contida no novo `app_web.py`. Esta é uma vantagem direta da
-arquitetura "engine-first" usada na Iteration 1.
-
----
-
+- **Ambiguidade detetada no REQ-010 AC:** O AC original diz "features idênticas
+  mas metadados não-analíticos diferentes". Não definíamos quais campos eram
+  "metadados não-analíticos". Resolvemos isso considerando que **só** `responses`
+  e `policy_version` entram no hash; `application_id`, `timestamp` e o que
+  vier futuramente como traçabilidade ficam fora. Vamos refletir isto numa
+  nota no Lab 10 (`docs/ac_dod_updates.md`).
+- **Constraint que faltava inicialmente no prompt:** quando pedimos a UI, esquecemos
+  de dizer "sem dependências externas". O tool propôs `customtkinter` (mais
+  bonito mas requer `pip install`). Tivemos de pedir refactor para `ttk` standard.
+  → Lição: ao prompt-arrastar a IA, **explicitar sempre os limites de stack**.
+- **O que mudaríamos nos requisitos depois desta experiência:**
+  - O REQ-006 deveria especificar o comportamento quando há **menos** de 5
+    drivers (ex.: política com 4 fatores) — atualmente devolveríamos os 4 sem
+    erro, mas o NFR-008 diz "obrigatoriamente os top 5". Conflito documentado
+    para Lab 10.
+  - O AC-2 do REQ-002 ("incluir `policyVersion`") deveria também exigir o
+    `policyChecksum`, porque sem checksum a auditoria não consegue distinguir
+    duas versões com o mesmo nome ressuscitadas.
+- **Sucesso da abordagem "engine-first":** Começar pelo motor (Iteration 1)
+  antes da UI (Iteration 2) facilitou o smoke test e permitiu validar a Variant 3
+  **sem depender** de cliques em UI — algo que vai ser muito útil quando
+  chegarmos ao Lab 11 (test-first).
