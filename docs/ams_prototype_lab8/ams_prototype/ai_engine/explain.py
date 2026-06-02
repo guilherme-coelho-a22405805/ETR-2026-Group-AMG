@@ -26,8 +26,8 @@ def explain_score(stored_run: Dict[str, Any], limit: int = 5) -> Dict[str, Any]:
     is_deterministic, fresh = replay_score(stored_run)
     if not is_deterministic:
         raise DeterminismError(
-            run_id=stored_run["result"]["runId"],
-            original_hash=stored_run["result"]["inputsHash"],
+            run_id=stored_run["runId"],             
+            original_hash=stored_run["inputsHash"],  
             replay_hash=fresh["inputsHash"],
         )
 

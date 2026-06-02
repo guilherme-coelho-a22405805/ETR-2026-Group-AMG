@@ -110,7 +110,8 @@ def test_explain_blocks_tampered_payload():
         },
         "result": {  
             "uncertainty_applied": False,
-            "policyVersion": "v1.0.0"  # <--- ÚLTIMA CORREÇÃO: O motor também procura a versão aqui!
+            "policyVersion": "v1.0.0",
+            "inputsHash": "hash_original_valido_123"
         },
         "breakdown": []
     }
