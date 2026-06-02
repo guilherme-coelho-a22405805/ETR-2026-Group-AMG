@@ -282,5 +282,76 @@
       "missingOptionalFields": [],
       "computedAt": "2026-05-19T07:33:32.949706+00:00"
     }
+  },
+  {
+    "normalizedPayload": {
+      "application_id": "APP-TEST-001",
+      "sector": "retail",
+      "responses": {
+        "documentation_completeness": 0.9086021505376344,
+        "monitoring_coverage": 0.7,
+        "dr_bcp_readiness": 0.7,
+        "access_management": 0.7,
+        "integrations_mapped": 0.7,
+        "support_model_defined": 0.7
+      },
+      "timestamp": "2026-06-02T08:48:05.224021+00:00",
+      "missing_optional_fields": []
+    },
+    "result": {
+      "runId": "125026c4-cf70-4cb5-8b9b-e81f7c0e7db8",
+      "applicationId": "APP-TEST-001",
+      "score": 75,
+      "policyVersion": "v1.0.0",
+      "policyChecksum": "0a401be5618595f90f120bf366e3c4adef60e28f8f4d69b7369c590482fefdab",
+      "inputsHash": "377bb968e484460b0d415d761cae7c2ef657068af58a197121fc22928b4707b0",
+      "breakdown": [
+        {
+          "factor": "documentation_completeness",
+          "label": "Cobertura da documentação",
+          "value": 0.9086,
+          "weight": 0.25,
+          "contribution": 22.7151
+        },
+        {
+          "factor": "monitoring_coverage",
+          "label": "Cobertura de observabilidade",
+          "value": 0.7,
+          "weight": 0.2,
+          "contribution": 14.0
+        },
+        {
+          "factor": "dr_bcp_readiness",
+          "label": "Prontidão DR/BCP",
+          "value": 0.7,
+          "weight": 0.2,
+          "contribution": 14.0
+        },
+        {
+          "factor": "access_management",
+          "label": "Gestão de acessos (RBAC)",
+          "value": 0.7,
+          "weight": 0.15,
+          "contribution": 10.5
+        },
+        {
+          "factor": "integrations_mapped",
+          "label": "Integrações mapeadas",
+          "value": 0.7,
+          "weight": 0.1,
+          "contribution": 7.0
+        },
+        {
+          "factor": "support_model_defined",
+          "label": "Modelo de suporte definido",
+          "value": 0.7,
+          "weight": 0.1,
+          "contribution": 7.0
+        }
+      ],
+      "uncertainty_applied": false,
+      "missingOptionalFields": [],
+      "computedAt": "2026-06-02T08:48:05.224430+00:00"
+    }
   }
 ]
