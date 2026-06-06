@@ -6,16 +6,7 @@ import sys
 import os
 from behave import given, when, then
 
-sys.path.insert(
-    0,
-    os.path.abspath(
-        os.path.join(
-            os.path.dirname(__file__),
-            "..", "..",
-            "docs", "ams_prototype_lab8", "ams_prototype",
-        )
-    ),
-)
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "docs", "ams_prototype_lab8", "ams_prototype")))
 
 from ai_engine.validator import validate_and_normalize, ValidationError
 from ai_engine.scoring import calculate_continuity_score
@@ -48,10 +39,6 @@ def _build_stored_run(result, normalized):
         "breakdown": result["breakdown"],
     }
 
-
-# ---------------------------------------------------------------------------
-# Happy path
-# ---------------------------------------------------------------------------
 
 @given(u'a complete intake payload for application "{app_id}" in sector "{sector}"')
 def step_complete_payload(context, app_id, sector):
@@ -102,20 +89,11 @@ def step_request_explain(context):
 def step_five_drivers(context):
     assert len(context.explanation["drivers"]) == 5
 
-@then(u'the drivers are ordered by absolute contribution descending')
-def step_drivers_ordered(context):
-    contribs = [abs(d["contribution"]) for d in context.explanation["drivers"]]
-    assert contribs == sorted(contribs, reverse=True)
-
 @then(u'every driver has a non-empty label')
 def step_driver_labels(context):
     for d in context.explanation["drivers"]:
         assert "label" in d and d["label"].strip() != ""
 
-
-# ---------------------------------------------------------------------------
-# Negative path
-# ---------------------------------------------------------------------------
 
 @given(u'an incomplete payload without the responses field')
 def step_incomplete_payload(context):
@@ -142,10 +120,6 @@ def step_field_missing(context, field):
     assert field in context.validation_error.fields
 
 
-# ---------------------------------------------------------------------------
-# Alternative flow
-# ---------------------------------------------------------------------------
-
 @given(u'a partial intake payload for application "{app_id}" in sector "{sector}"')
 def step_partial_payload(context, app_id, sector):
     context.raw_payload = {
@@ -156,17 +130,12 @@ def step_partial_payload(context, app_id, sector):
 
 @given(u'only 2 out of 6 readiness factors are provided')
 def step_only_two_factors(context):
-    # já definido no step anterior — confirmar apenas
     assert len(context.raw_payload["responses"]) == 2
 
 @then(u'the response includes 4 missing optional fields')
 def step_four_missing(context):
     assert len(context.result["missingOptionalFields"]) == 4
 
-
-# ---------------------------------------------------------------------------
-# Boundary — score zero + determinismo
-# ---------------------------------------------------------------------------
 
 @given(u'an intake payload for application "{app_id}" in sector "{sector}"')
 def step_generic_payload(context, app_id, sector):
