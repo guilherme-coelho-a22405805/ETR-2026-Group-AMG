@@ -1,10 +1,8 @@
 # Test dependencies — adicionado no grooming do Lab 14.
-# Motivo: antes não havia ficheiro de dependencias de teste; o requirements.txt
-# do prototipo so listava streamlit, deixando pytest/behave por documentar
-# (causava "ModuleNotFoundError"/"behave: not found" em maquinas limpas).
 #
-# Nota: NAO fixamos behave<1.3. A duplicacao de step que quebrava em behave>=1.3
-# (AmbiguousStep) foi corrigida na causa-raiz (ver test_grooming_report.md, acao 1),
-# por isso o suite corre em qualquer versao recente.
+# NOTA (entrega final): a partir da entrega, o ficheiro principal de dependencias
+# e o requirements.txt na raiz, que ja inclui app + testes. Este ficheiro mantem-se
+# por compatibilidade com o registo do Lab 14 e lista apenas as dependencias de teste.
+# Para instalar tudo de uma vez, usar:  pip install -r requirements.txt
 pytest>=8.0
 behave>=1.2.6

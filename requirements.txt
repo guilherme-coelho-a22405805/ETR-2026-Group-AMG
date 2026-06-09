@@ -1,0 +1,9 @@
+# AMS Intake Platform — dependencias do projeto
+# Cobre a aplicacao (UI web) e os testes (unit + BDD).
+
+# --- Aplicacao (UI web) ---
+streamlit>=1.30.0
+
+# --- Testes ---
+pytest>=8.0      # testes unitarios (tests/test_engine.py)
+behave>=1.2.6    # testes de integracao BDD (bdd/)
